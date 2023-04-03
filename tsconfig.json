@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        "rootDir": "./src/",
+        "target": "es2021",
+        "lib": ["es2021", "dom", "ES2021.String"],
+        "types": [
+            "react/next",
+            "react-dom/next"
+        ],
+        "removeComments": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "moduleResolution": "node",
+
+
+        "strict": true,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+
+        "importsNotUsedAsValues": "error",
+        "checkJs": true,
+
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "./src/js/**/*.ts",
+        "./src/js/**/*.js",
+        "./src/jsx/**/*.tsx",
+        "./src/jsx/**/*.jsx"]
+}
