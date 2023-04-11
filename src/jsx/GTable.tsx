@@ -56,17 +56,17 @@ export function GTable(props:{
         );
     }
 
-    props.data = props.data as google.EnhancedSpreadsheet;
+    let realdata = props.data as google.EnhancedSpreadsheet;
 
     // Restructure input data to be more transparently available in components
-    let data = props.data.sheets?.[0]?.data?.[0]?.rowData || [];
-    let rowSizes = props.data.sheets?.[0]?.data?.[0]?.rowMetadata || [];
-    let colSizes = props.data.sheets?.[0]?.data?.[0]?.columnMetadata || [];
-    let merges = props.data.sheets?.[0]?.merges || [];
+    let data = realdata.sheets?.[0]?.data?.[0]?.rowData || [];
+    let rowSizes = realdata.sheets?.[0]?.data?.[0]?.rowMetadata || [];
+    let colSizes = realdata.sheets?.[0]?.data?.[0]?.columnMetadata || [];
+    let merges = realdata.sheets?.[0]?.merges || [];
     let settings = props.settings || new GTableSettings();
 
-    let numrows = props.data.numrows;
-    let numcols = props.data.numcols;
+    let numrows = realdata.numrows;
+    let numcols = realdata.numcols;
 
     if (!numrows || !numcols) {
         ({numrows, numcols} = helpers.getDataSize(data));
