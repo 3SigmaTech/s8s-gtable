@@ -25,5 +25,6 @@ export declare function columnStyle(columnMetadata?: google.DimensionProperties)
 };
 export declare function columnToLetter(column: number): string;
 export declare function letterToColumn(letter: string): number;
+export declare function toTitleCase(str: string): string;
 export {};
 //# sourceMappingURL=GTableHelpers.d.ts.map

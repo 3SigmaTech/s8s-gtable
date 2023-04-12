@@ -14,7 +14,6 @@
         "jsx": "preserve",
         "moduleResolution": "node",
 
-
         "strict": true,
         "allowUnusedLabels": false,
         "allowUnreachableCode": false,
@@ -38,5 +37,6 @@
         "./src/js/**/*.ts",
         "./src/js/**/*.js",
         "./src/jsx/**/*.tsx",
-        "./src/jsx/**/*.jsx"]
+        "./src/jsx/**/*.jsx"
+    ]
 }

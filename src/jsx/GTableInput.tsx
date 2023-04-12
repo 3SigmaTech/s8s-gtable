@@ -30,7 +30,7 @@ export default function GTableCellInput(props: {
     }
     if (cls == GTableClasses.percentInput) {
         v = parseFloat((100 * v).toFixed(6));
-        props.style['padding-right'] = "1.01em";
+        props.style['paddingRight'] = "1.01em";
     }
     let style = helpers.inputStyle(props.style, cls);
 

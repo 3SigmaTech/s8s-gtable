@@ -84,22 +84,22 @@ export function textStyle(textStyle?: google.TextFormat) {
         style['color'] = rgbStr(textStyle.foregroundColorStyle.rgbColor);
     }
     if (textStyle.fontFamily != undefined) {
-        style['font-family'] = textStyle.fontFamily;
+        style['fontFamily'] = textStyle.fontFamily;
     }
     if (textStyle.fontSize != undefined) {
-        style['font-size'] = `${textStyle.fontSize}pt`;
+        style['fontSize'] = `${textStyle.fontSize}pt`;
     }
     if (textStyle.bold != undefined && textStyle.bold) {
-        style['font-weight'] = 'bold';
+        style['fontWeight'] = 'bold';
     }
     if (textStyle.italic != undefined && textStyle.italic) {
-        style['font-style'] = 'italic';
+        style['fontStyle'] = 'italic';
     }
     if (textStyle.strikethrough != undefined && textStyle.strikethrough) {
-        style['text-decoration'] = 'line-through';
+        style['textDecoration'] = 'line-through';
     }
     if (textStyle.underline != undefined && textStyle.underline) {
-        style['text-decoration'] = 'underline';
+        style['textDecoration'] = 'underline';
     }
     return style;
 }
@@ -117,25 +117,25 @@ export function cellStyle(
     }
 
     if (format.backgroundColorStyle?.rgbColor != undefined) {
-        style['background-color'] = rgbStr(format.backgroundColorStyle.rgbColor);
+        style['backgroundColor'] = rgbStr(format.backgroundColorStyle.rgbColor);
     } else if (format.backgroundColor != undefined) {
-        style['background-color'] = rgbStr(format.backgroundColor);
+        style['backgroundColor'] = rgbStr(format.backgroundColor);
     }
 
     let ha = format.horizontalAlignment;
     if (ha != undefined) {
-        style['text-align'] = ha;
+        style['textAlign'] = ha;
     }
 
     let va = format.verticalAlignment;
     if (va != undefined) {
-        style['vertical-align'] = va;
+        style['verticalAlign'] = va;
     }
 
     let padding = format.padding;
     if (padding != undefined) {
         for (const pad of Object.entries(padding)) {
-            style[`padding-${pad[0]}`] = `${pad[1] || 0}px`;
+            style[`padding${toTitleCase(pad[0])}`] = `${pad[1] || 0}px`;
         }
     }
 
@@ -148,7 +148,7 @@ export function cellStyle(
             }
             if (b.colorStyle?.rgbColor != undefined) {
                 let bstring = `${(b.width || 0)}px ${(b.style || 'solid')} ${rgbStr(b.colorStyle.rgbColor)}`;
-                style[`border-${border[0]}`] = bstring;
+                style[`border${toTitleCase(border[0])}`] = bstring;
             }
         }
     }
@@ -161,26 +161,26 @@ export function cellStyle(
     if (format.wrapStrategy != undefined) {
         if (format.wrapStrategy == "OVERFLOW_CELL") {
             style['overflow'] = 'visible';
-            style['white-space'] = 'nowrap';
+            style['whiteSpace'] = 'pre';
         }
         if (format.wrapStrategy == "CLIP") {
             style['overflow'] = 'hidden';
-            style['white-space'] = 'nowrap';
+            style['whiteSpace'] = 'pre';
         }
         if (format.wrapStrategy == "WRAP") {
-            style['white-space'] = 'pre-wrap';
+            style['whiteSpace'] = 'pre-wrap';
         }
     }
 
     if (rowSize) {
         let sz = (rowSize.pixelSize || 0);
-        style['max-height'] = `${sz}px`;
+        style['maxHeight'] = `${sz}px`;
         style['height'] = `${sz}px`;
     }
 
     if (colSize) {
         let sz = (colSize.pixelSize || 0);
-        style['max-width'] = `${sz}px`;
+        style['maxWidth'] = `${sz}px`;
         style['width'] = `${sz}px`;
     }
 
@@ -217,3 +217,11 @@ export function letterToColumn(letter: string): number {
     return column;
 }
 
+export function toTitleCase(str: string): string {
+    return str.replace(
+        /\w\S*/g,
+        function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+}

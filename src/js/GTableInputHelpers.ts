@@ -30,15 +30,15 @@ export function inputStyle(style: { [key: string]: any }, cls:string) {
     let newstyle = {...style};
 
     if (cls == GTableClasses.percentInput) {
-        newstyle['padding-right'] = "1.01em";
+        newstyle['paddingRight'] = "1.01em";
     }
 
     newstyle['border'] = 'none';
-    newstyle['max-height'] = '';
+    newstyle['maxHeight'] = '';
     newstyle['height'] = '';
     newstyle['width'] = (
         parseFloat(newstyle['width'].replace('px', ''))
-        - (parseInt(newstyle["border-left"], 10) || 1)
+        - (parseInt(newstyle["borderLeft"], 10) || 1)
     ) + 'px';
 
     return newstyle;

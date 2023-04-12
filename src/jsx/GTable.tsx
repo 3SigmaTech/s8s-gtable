@@ -109,7 +109,7 @@ function GTableHeader() {
     for (let c = 0; c < context.numcols; c++) {
         let mystyle = helpers.columnStyle(context.colSizes[c]);
         headers.push(
-            <th className={classes.th} style={mystyle}>
+            <th className={classes.th} style={mystyle} key={c}>
                 {helpers.columnToLetter(c + 1)}
             </th>
         );
@@ -117,7 +117,9 @@ function GTableHeader() {
 
     return (
         <thead className={classes.thead}>
-            {headers}
+            <tr>
+                {headers}
+            </tr>
         </thead>
     );
 }
@@ -134,7 +136,7 @@ function GTableBody() {
             continue;
         }
         rows.push(
-            <GTableRow row={r} />
+            <GTableRow row={r} key={r}/>
         );
     }
 
@@ -167,7 +169,7 @@ function GTableRow(props:{row:number}) {
 
     for (let c = 0; c < context.numcols; c++) {
         cells.push(
-            <GTableCell row={props.row} col={c} />
+            <GTableCell row={props.row} col={c} key={c} />
         );
     }
 
@@ -207,23 +209,23 @@ function GTableCell(props:{row:number, col:number}) {
 
     if (merge.startOfMerge) {
         let m = merge.context as google.GridRange;
-        attrs['colspan'] = (m.endColumnIndex || 0) - (m.startColumnIndex || 0);
-        attrs['rowspan'] = (m.endRowIndex || 0) - (m.startRowIndex || 0);
+        attrs['colSpan'] = (m.endColumnIndex || 0) - (m.startColumnIndex || 0);
+        attrs['rowSpan'] = (m.endRowIndex || 0) - (m.startRowIndex || 0);
     }
 
     attrs['data-range'] = helpers.columnToLetter(col + 1) + (row + 1);
     attrs['data-col'] = col;
     attrs['data-row'] = row;
 
-    let children:JSX.Element[] = [];
+    let child:JSX.Element;
     if (!context.settings.configurable(data)) {
-        children.push(
+        child = (
             <GTableCellData 
                 data={data}
             />
         );
     } else {
-        children.push(
+        child = (
             <GTableCellInput
                 data={data}
                 style={{...style}}
@@ -239,7 +241,7 @@ function GTableCell(props:{row:number, col:number}) {
         //     myclass += (' ' + cls);
         // }
         style['padding'] = '0';
-        style['background-color'] = 'red'
+        style['backgroundColor'] = 'red'
 
     }
 
@@ -252,7 +254,7 @@ function GTableCell(props:{row:number, col:number}) {
 
     return (
         <td className={myclass} style={style} {...attrs}>
-            {children}
+            {child}
         </td>
     );
 }
@@ -261,7 +263,7 @@ function GTableCellData(props: { data: google.CellData }) {
     if (!props.data) {
         return <></>;
     } else if (props.data.textFormatRuns == undefined) {
-        return <>{props.data.formattedValue || ''}</>;
+        return <>{props.data.formattedValue}</>;
     } else {
         let cellContents:JSX.Element[] = [];
         let lasti = props.data.textFormatRuns.length - 1;
@@ -270,25 +272,37 @@ function GTableCellData(props: { data: google.CellData }) {
             let mystr = props.data.formattedValue || '';
 
             let startindex = (i == 0 ? 0 : (props.data.textFormatRuns[i]?.startIndex || 0));
-            let endindex = (i == lasti ? mystr.length : (props.data.textFormatRuns[i + 1]?.startIndex || 0) - 1);
+            let endindex = (i == lasti ? mystr.length : (props.data.textFormatRuns[i + 1]?.startIndex || 0));
 
             mystr = mystr.slice(startindex, endindex);
 
             let pstyle = helpers.textStyle(format);
 
-            let nextEl = <p style={pstyle}></p>;
-            nextEl.props.children = [];
+            let child:JSX.Element;
+            let childkey = 0;
             if (format?.link?.uri) {
-                nextEl.props.children.push(
-                    <a href={format.link.uri} target="_blank">
+                child = (
+                    <a
+                        href={format.link.uri}
+                        target="_blank"
+                        key={childkey}
+                    >
                         {mystr}
                     </a>
                 );
             } else {
-                nextEl.props.children.push(
-                    <>{mystr}</>
+                child = (
+                    <span key={childkey}>
+                        {mystr}
+                    </span>
                 );
             }
+            let nextEl = (
+                <span style={pstyle} key={i}>
+                    {child}
+                </span>
+            );
+
             cellContents.push(nextEl);
         }
         return <>{cellContents}</>;
