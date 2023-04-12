@@ -1,6 +1,6 @@
 {
     "name": "s8s-gtable",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Google Spreadsheet rendered as HTML Table by React",
     "engines": {
         "node": "19.x",
