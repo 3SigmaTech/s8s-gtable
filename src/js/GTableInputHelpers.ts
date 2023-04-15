@@ -23,11 +23,11 @@ export function inputClass(data?: google.CellData): string {
     return '';
 }
 
-export function inputStyle(style: { [key: string]: any }, cls:string) {
+export function inputStyle(style: { [key: string]: any }, cls: string) {
     // Takes cellStyle (style) and inferred input class (cls)
     // And updates style to apply to input
 
-    let newstyle = {...style};
+    let newstyle = { ...style };
 
     if (cls == GTableClasses.percentInput) {
         newstyle['paddingRight'] = "1.01em";
@@ -44,25 +44,30 @@ export function inputStyle(style: { [key: string]: any }, cls:string) {
     return newstyle;
 }
 
-export function cleanInput(value:string):string {
+export function cleanInput(value: string): string {
     // Remove non-digit characters that are a dash or period
     value = value.replace(/[^0-9\-\.]+/g, "");
     // Remove all but the first occurence of a period
-    value = value.replace(/(?<=(.*\..*))\.\./g, "");
+    let values = value.split('.');
+    if (values.length > 2) {
+        value = values[0] + '.' + values.slice(1).join('');
+    }
+    // This regex does not work on iOS (and causes file read to fail) 
+    // value = value.replace(/(?<=(.*\..*))\.\./g, "");
     // Remove all dashes that aren't at the start of the line
     value = value.replace(/(?!^)\-/g, "");
-    
+
     return value;
 }
 
-export function addInputContext(inputs:GTableInputData[], address:string, value:number) {
+export function addInputContext(inputs: GTableInputData[], address: string, value: number) {
     inputs.push({
         range: address,
         values: [[value]]
     });
 }
 
-export function removeInputContext(inputs:GTableInputData[], address:string) {
+export function removeInputContext(inputs: GTableInputData[], address: string) {
     for (let i = 0; i < inputs.length; i++) {
         if (inputs[i]?.range == address) {
             inputs.splice(i, 1);

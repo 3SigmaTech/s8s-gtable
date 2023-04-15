@@ -22,6 +22,9 @@ let base = {
         babel({
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
             presets: ["@babel/env", "@babel/preset-react"],
+            targets: {
+                "browsers": "defaults and supports es6-module"
+            },
             babelHelpers: 'bundled'
         }),
     ],

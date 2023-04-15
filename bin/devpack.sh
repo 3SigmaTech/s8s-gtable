@@ -1,4 +1,5 @@
 
+nvm use 18
 npm run deploy
 npm pack --pack-destination ~/Repos/
 echo "Updating package in S8S API Rep"

@@ -18,7 +18,8 @@
         "build": "npm run build-js && npm run build-css && npm run dist-css && npm run dist-js",
         "test": "echo 'There are no tests at this time'",
         "deploy": "npm run build && npm run test",
-        "devpack": "sh ./bin/devpack.sh"
+        "devpack": "sh ./bin/devpack.sh",
+        "release": "echo TODO add gulp file or similar to increment version and add tag and push"
     },
     "dependencies": {
         "react": "^18.2.0",
