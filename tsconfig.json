@@ -1,12 +1,15 @@
 {
     "compilerOptions": {
         "rootDir": "./src/",
+        "outDir": "./dist/",
         "target": "es2021",
         "lib": ["es2021", "dom", "ES2021.String"],
         "types": [
             "react/next",
             "react-dom/next"
         ],
+        "declaration": true,
+        "declarationMap": true,
         "removeComments": true,
         "allowJs": true,
         "resolveJsonModule": true,

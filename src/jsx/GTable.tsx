@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as client from 'react-dom/client';
 
 import type * as google from '../types/s8s-google-types';
 
@@ -14,15 +14,19 @@ export { GTableSettings, classes as GTableClasses, GTableInputData } from '../js
 import GTableCellInput from './GTableInput';
 
 
-export function renderGTable(tbl: string, data: google.TableData, settings?: GTableSettings) {
+export function renderGTable(tbl: string, data: google.TableData, settings?: GTableSettings):client.Root {
     // Just in case
     tbl = tbl.replace('#', '');
 
+    const root = client.createRoot(
+        document.getElementById(tbl) as HTMLElement
+    );
+    
     if ("error" in data) {
-        return ;
+        return root;
     }
+    
     data = data as google.EnhancedSpreadsheet;
-
 
     if (settings?.createmaxtrix) {
         let { numrows, numcols } = helpers.getDataSize(
@@ -33,13 +37,8 @@ export function renderGTable(tbl: string, data: google.TableData, settings?: GTa
         helpers.createMatrix(data);
     }
 
-    // @ts-ignore - There is a weird typing issue with createRoot
-    // And I've already wasted an hour trying to figure it out
-    // Something about using react-dom/client...which causes browser error
-    const root = ReactDOM.createRoot(
-        document.getElementById(tbl) as HTMLElement
-    );
     root.render(<GTable data={data} settings={settings as GTableSettings} />);
+    return root;
 }
 
 export default GTable;
