@@ -1,10 +1,13 @@
 .github/
 .vscode/
+src/
+vendor/
 build/
 man/
 test/
 tests/
-rollup.config.js
+gulpfile.*
+rollup.*
 tsconfig.json
-tslint.json
+*lint.*
 bin/
